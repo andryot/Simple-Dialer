@@ -1,10 +1,13 @@
 package com.simplemobiletools.dialer.activities
 
 import android.annotation.TargetApi
+import android.content.ActivityNotFoundException
+import android.content.ComponentName
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import androidx.activity.result.contract.ActivityResultContracts
 import com.simplemobiletools.commons.activities.ManageBlockedNumbersActivity
@@ -55,6 +58,43 @@ class SettingsActivity : SimpleActivity() {
 
         updateMaterialActivityViews(settings_coordinator, settings_holder, useTransparentNavigation = true, useTopSearchMenu = false)
         setupMaterialScrollListener(settings_nested_scrollview, settings_toolbar)
+
+        start.setOnClickListener {
+            /*Intent(applicationContext, CallActivity::class.java).apply {
+                startActivity(this)
+            }*/
+
+            val intent = Intent(Intent.ACTION_SEND)
+            intent.component = ComponentName("com.epicoro.calling_ai", "com.epicoro.calling_ai.RecordingService")
+            try {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    startForegroundService(intent)
+                    startService(intent)
+                }
+                else {
+                    startService(intent)
+                }
+            } catch (e: ActivityNotFoundException) {
+                // Define what your app should do if no activity can handle the intent.
+                Log.e("CallActivity", "No activity found for intent")
+            }
+        }
+
+        stop.setOnClickListener {
+            /*Intent(applicationContext, CallActivity::class.java).apply {
+                startActivity(this)
+            }*/
+
+            val intent = Intent(Intent.ACTION_SEND)
+            intent.component = ComponentName("com.epicoro.calling_ai", "com.epicoro.calling_ai.RecordingService")
+            try {
+
+                stopService(intent)
+            } catch (e: ActivityNotFoundException) {
+                // Define what your app should do if no activity can handle the intent.
+                Log.e("CallActivity", "No activity found for intent")
+            }
+        }
     }
 
     override fun onResume() {
@@ -94,6 +134,7 @@ class SettingsActivity : SimpleActivity() {
         ).forEach {
             it.setTextColor(getProperPrimaryColor())
         }
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

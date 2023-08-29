@@ -160,6 +160,40 @@
                     android:text="@string/manage_speed_dial" />
 
             </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/start"
+                style="@style/SettingsHolderTextViewOneLinerStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="visible"
+                >
+
+                <com.simplemobiletools.commons.views.MyTextView
+                    style="@style/SettingsTextLabelStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Start recording"
+                    />
+
+
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/stop"
+                style="@style/SettingsHolderTextViewOneLinerStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="visible"
+                >
+
+                <com.simplemobiletools.commons.views.MyTextView
+                    style="@style/SettingsTextLabelStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Stop recording"
+                    />
+
+
+            </RelativeLayout>
 
             <RelativeLayout
                 android:id="@+id/settings_font_size_holder"

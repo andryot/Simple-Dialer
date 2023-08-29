@@ -157,90 +157,141 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         tools:visibility="visible">
 
-        <ImageView
-            android:id="@+id/call_toggle_microphone"
-            android:layout_width="@dimen/dialpad_button_size"
-            android:layout_height="@dimen/dialpad_button_size"
-            android:background="@drawable/circle_background"
-            android:contentDescription="@string/turn_microphone_off"
-            android:padding="@dimen/activity_margin"
-            android:src="@drawable/ic_microphone_off_vector"
+        <FrameLayout
+            android:id="@+id/call_microphone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/call_toggle_speaker"
+            app:layout_constraintEnd_toStartOf="@+id/call_speaker"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.63" />
+            app:layout_constraintVertical_bias="0.63">
 
-        <ImageView
-            android:id="@+id/call_toggle_speaker"
-            android:layout_width="@dimen/dialpad_button_size"
-            android:layout_height="@dimen/dialpad_button_size"
-            android:background="@drawable/circle_background"
-            android:contentDescription="@string/turn_speaker_on"
-            android:padding="@dimen/activity_margin"
-            android:src="@drawable/ic_volume_up_vector"
+            <View
+                style="@style/RoundedRectangleView"
+                android:alpha="0.2"
+                android:contentDescription="@string/turn_microphone_off" />
+
+            <ImageView
+                android:id="@+id/call_toggle_microphone"
+                style="@style/IconButtonImageView"
+                android:src="@drawable/ic_microphone_off_vector" />
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/call_speaker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/call_dialpad"
-            app:layout_constraintStart_toEndOf="@+id/call_toggle_microphone"
+            app:layout_constraintEnd_toStartOf="@+id/call_dialpad_frame"
+            app:layout_constraintStart_toStartOf="@+id/call_microphone"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.63" />
+            app:layout_constraintVertical_bias="0.63">
 
-        <ImageView
-            android:id="@+id/call_dialpad"
-            android:layout_width="@dimen/dialpad_button_size"
-            android:layout_height="@dimen/dialpad_button_size"
-            android:background="@drawable/circle_button_background_ripple"
-            android:contentDescription="@string/show_dialpad"
-            android:padding="@dimen/activity_margin"
-            android:src="@drawable/ic_dialpad_vector"
+            <View
+                style="@style/RoundedRectangleView"
+                android:alpha="0.2"
+                android:contentDescription="@string/turn_speaker_on" />
+
+            <ImageView
+                android:id="@+id/call_toggle_speaker"
+                style="@style/IconButtonImageView"
+                android:src="@drawable/ic_volume_up_vector" />
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/call_dialpad_frame"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/call_toggle_speaker"
+            app:layout_constraintEnd_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/call_speaker"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.63" />
+            app:layout_constraintVertical_bias="0.63">
 
-        <ImageView
-            android:id="@+id/call_toggle_hold"
-            android:layout_width="@dimen/dialpad_button_size"
-            android:layout_height="@dimen/dialpad_button_size"
-            android:layout_marginTop="@dimen/big_margin"
-            android:background="@drawable/circle_background"
-            android:contentDescription="@string/hold_call"
-            android:padding="@dimen/activity_margin"
-            android:src="@drawable/ic_pause_vector"
-            app:layout_constraintEnd_toEndOf="@+id/call_toggle_microphone"
-            app:layout_constraintStart_toStartOf="@+id/call_toggle_microphone"
-            app:layout_constraintTop_toBottomOf="@+id/call_toggle_microphone" />
+            <View
+                style="@style/RoundedRectangleView"
+                android:alpha="0.2"
+                android:contentDescription="@string/show_dialpad" />
 
-        <ImageView
-            android:id="@+id/call_add"
-            android:layout_width="@dimen/dialpad_button_size"
-            android:layout_height="@dimen/dialpad_button_size"
-            android:layout_marginTop="@dimen/big_margin"
-            android:background="@drawable/circle_button_background_ripple"
-            android:contentDescription="@string/call_add"
-            android:padding="@dimen/activity_margin"
-            android:src="@drawable/ic_add_call_vector"
-            app:layout_constraintEnd_toEndOf="@+id/call_toggle_speaker"
-            app:layout_constraintStart_toStartOf="@+id/call_toggle_speaker"
-            app:layout_constraintTop_toBottomOf="@+id/call_toggle_speaker" />
+            <ImageView
+                android:id="@+id/call_dialpad"
+                style="@style/IconButtonImageView"
+                android:src="@drawable/ic_dialpad_vector" />
 
-        <ImageView
-            android:id="@+id/call_manage"
-            android:layout_width="@dimen/dialpad_button_size"
-            android:layout_height="@dimen/dialpad_button_size"
-            android:layout_marginTop="@dimen/big_margin"
-            android:background="@drawable/circle_button_background_ripple"
-            android:contentDescription="@string/conference_manage"
-            android:padding="@dimen/activity_margin"
-            android:src="@drawable/ic_people_vector"
-            android:visibility="gone"
-            app:layout_constraintEnd_toEndOf="@+id/call_dialpad"
-            app:layout_constraintStart_toStartOf="@+id/call_dialpad"
-            app:layout_constraintTop_toBottomOf="@+id/call_dialpad"
-            tools:visibility="visible" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/call_hold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/call_microphone"
+            app:layout_constraintStart_toStartOf="@+id/call_microphone"
+            app:layout_constraintTop_toTopOf="@+id/call_microphone"
+            app:layout_constraintVertical_bias="0.63">
+
+            <View
+                style="@style/RoundedRectangleView"
+                android:alpha="0.2"
+                android:contentDescription="@string/hold_call" />
+
+            <ImageView
+                android:id="@+id/call_toggle_hold"
+                style="@style/IconButtonImageView"
+                android:src="@drawable/ic_pause_vector" />
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/call_add_frame"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="@+id/call_speaker"
+            app:layout_constraintStart_toStartOf="@+id/call_speaker"
+            app:layout_constraintTop_toBottomOf="@+id/call_speaker"
+            app:layout_constraintVertical_bias="0.63">
+
+            <View
+                style="@style/RoundedRectangleView"
+                android:alpha="0.2"
+                android:contentDescription="@string/call_add" />
+
+            <ImageView
+                android:id="@+id/call_add"
+                style="@style/IconButtonImageView"
+                android:src="@drawable/ic_add_call_vector" />
+
+        </FrameLayout>
+
+
+        <FrameLayout
+            android:id="@+id/call_record_sound_frame"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="@+id/call_dialpad_frame"
+            app:layout_constraintStart_toStartOf="@+id/call_dialpad_frame"
+            app:layout_constraintTop_toBottomOf="@+id/call_dialpad_frame"
+            app:layout_constraintVertical_bias="0.63">
+
+            <View
+                style="@style/RoundedRectangleView"
+                android:alpha="0.2"
+                android:contentDescription="@string/conference_manage" />
+
+            <ImageView
+                android:id="@+id/call_record_sound"
+                style="@style/IconButtonImageView"
+                android:src="@drawable/ic_recording" />
+
+        </FrameLayout>
+
 
         <ImageView
             android:id="@+id/call_swap"
@@ -251,10 +302,10 @@
             android:contentDescription="@string/call_swap"
             android:padding="@dimen/activity_margin"
             android:src="@drawable/ic_call_swap_vector"
-            app:layout_constraintEnd_toEndOf="@+id/call_toggle_microphone"
+            app:layout_constraintEnd_toEndOf="@+id/call_microphone"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="@+id/call_toggle_microphone"
-            app:layout_constraintTop_toBottomOf="@+id/call_toggle_microphone" />
+            app:layout_constraintStart_toStartOf="@+id/call_microphone"
+            app:layout_constraintTop_toBottomOf="@+id/call_microphone" />
 
         <ImageView
             android:id="@+id/call_merge"
@@ -265,35 +316,51 @@
             android:contentDescription="@string/call_merge"
             android:padding="@dimen/activity_margin"
             android:src="@drawable/ic_call_merge_vector"
-            app:layout_constraintEnd_toEndOf="@+id/call_toggle_speaker"
+            app:layout_constraintEnd_toEndOf="@+id/call_speaker"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="@+id/call_toggle_speaker"
-            app:layout_constraintTop_toBottomOf="@+id/call_toggle_speaker" />
+            app:layout_constraintStart_toStartOf="@+id/call_speaker"
+            app:layout_constraintTop_toBottomOf="@+id/call_speaker" />
 
         <androidx.constraintlayout.widget.Barrier
             android:id="@+id/call_control_grid_barrier"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:barrierDirection="bottom"
-            app:constraint_referenced_ids="call_toggle_microphone,call_toggle_speaker,call_dialpad,call_toggle_hold,call_add,call_swap,call_merge,call_manage" />
+            app:constraint_referenced_ids="call_microphone,call_speaker,call_dialpad_frame,call_hold,call_add_frame,call_swap,call_record_sound_frame" />
 
-        <ImageView
-            android:id="@+id/call_end"
-            android:layout_width="@dimen/dialpad_button_size"
-            android:layout_height="@dimen/dialpad_button_size"
-            android:contentDescription="@string/end_call"
-            android:src="@drawable/ic_call_decline"
+
+        <FrameLayout
+            android:id="@+id/call_end_frame"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/call_control_grid_barrier" />
+            app:layout_constraintTop_toBottomOf="@id/call_control_grid_barrier">
+
+        <View
+            style="@style/RoundedHangUpView"
+            android:alpha="0.2"
+            android:contentDescription="@string/end_call" />
+
+        <ImageView
+            android:id="@+id/call_end"
+            style="@style/IconButtonImageView"
+            android:src="@drawable/hang_up"
+            />
+
+        </FrameLayout>
+
+
+
+
 
         <androidx.constraintlayout.widget.Group
             android:id="@+id/controls_single_call"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="gone"
-            app:constraint_referenced_ids="call_toggle_hold,call_add"
+            app:constraint_referenced_ids="call_hold,call_add_frame"
             tools:visibility="visible" />
 
         <androidx.constraintlayout.widget.Group

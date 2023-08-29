@@ -57,6 +57,7 @@ class MainActivity : SimpleActivity() {
         refreshMenuItems()
         updateMaterialActivityViews(main_coordinator, main_holder, useTransparentNavigation = false, useTopSearchMenu = true)
 
+
         launchedDialer = savedInstanceState?.getBoolean(OPEN_DIAL_PAD_AT_LAUNCH) ?: false
 
         if (isDefaultDialer()) {
@@ -462,6 +463,9 @@ class MainActivity : SimpleActivity() {
     }
 
     private fun launchDialpad() {
+        /*Intent(applicationContext, CallActivity::class.java).apply {
+            startActivity(this)
+        }*/
         Intent(applicationContext, DialpadActivity::class.java).apply {
             startActivity(this)
         }

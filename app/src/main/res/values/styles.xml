@@ -21,4 +21,21 @@
         <item name="android:layout_centerHorizontal">true</item>
     </style>
 
+    <style name="RoundedRectangleView">
+        <item name="android:layout_width">75dp</item>
+        <item name="android:layout_height">75dp</item>
+        <item name="android:background">@drawable/rounded_rectangle</item>
+    </style>
+    <style name="RoundedHangUpView">
+        <item name="android:layout_width">75dp</item>
+        <item name="android:layout_height">75dp</item>
+        <item name="android:background">@drawable/rounded_rectangle_red</item>
+    </style>
+
+    <style name="IconButtonImageView">
+        <item name="android:layout_gravity">center</item>
+        <item name="android:layout_width">@dimen/dialpad_button_size</item>
+        <item name="android:layout_height">@dimen/dialpad_button_size</item>
+    </style>
+
 </resources>

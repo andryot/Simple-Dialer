@@ -2,18 +2,20 @@ package com.simplemobiletools.dialer.activities
 
 import android.annotation.SuppressLint
 import android.app.KeyguardManager
+import android.content.ActivityNotFoundException
+import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import android.content.res.AssetFileDescriptor
 import android.graphics.Bitmap
 import android.graphics.drawable.LayerDrawable
 import android.graphics.drawable.RippleDrawable
 import android.media.AudioManager
-import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
-import android.os.PowerManager
+import android.media.MediaPlayer
+import android.os.*
 import android.telecom.Call
 import android.telecom.CallAudioState
+import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.view.WindowManager
@@ -33,8 +35,10 @@ import com.simplemobiletools.dialer.models.AudioRoute
 import com.simplemobiletools.dialer.models.CallContact
 import kotlinx.android.synthetic.main.activity_call.*
 import kotlinx.android.synthetic.main.dialpad.*
+import java.io.IOException
 import kotlin.math.max
 import kotlin.math.min
+
 
 class CallActivity : SimpleActivity() {
     companion object {
@@ -65,10 +69,10 @@ class CallActivity : SimpleActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_call)
 
-        if (CallManager.getPhoneState() == NoCall) {
+        /*if (CallManager.getPhoneState() == NoCall) {
             finish()
             return
-        }
+        }*/
 
         updateTextColors(call_holder)
         initButtons()
@@ -156,10 +160,26 @@ class CallActivity : SimpleActivity() {
         }
 
         call_add.setOnClickListener {
-            Intent(applicationContext, DialpadActivity::class.java).apply {
+            /*Intent(applicationContext, DialpadActivity::class.java).apply {
                 addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
                 startActivity(this)
+            }*/
+            Log.d("CallActivity", "call_add clicked")
+            val intent = Intent(Intent.ACTION_SEND)
+            intent.component = ComponentName("com.epicoro.calling_ai", "com.epicoro.calling_ai.RecordingService")
+            try {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    startForegroundService(intent)
+                    startService(intent)
+                }
+                else {
+                    startService(intent)
+                }
+            } catch (e: ActivityNotFoundException) {
+                // Define what your app should do if no activity can handle the intent.
+                Log.e("CallActivity", "No activity found for intent")
             }
+            Log.d("CallActivity", "call_add started")
         }
 
         call_swap.setOnClickListener {
@@ -170,8 +190,8 @@ class CallActivity : SimpleActivity() {
             CallManager.merge()
         }
 
-        call_manage.setOnClickListener {
-            startActivity(Intent(this, ConferenceActivity::class.java))
+        call_record_sound.setOnClickListener {
+            playRecordingSound()
         }
 
         call_end.setOnClickListener {
@@ -221,7 +241,7 @@ class CallActivity : SimpleActivity() {
         val inactiveColor = getInactiveButtonColor()
         arrayOf(
             call_toggle_microphone, call_toggle_speaker, call_dialpad,
-            call_toggle_hold, call_add, call_swap, call_merge, call_manage
+            call_toggle_hold, call_add, call_swap, call_merge, call_record_sound
         ).forEach {
             it.applyColorFilter(bgColor.getContrastColor())
             it.background.applyColorFilter(inactiveColor)
@@ -229,7 +249,7 @@ class CallActivity : SimpleActivity() {
 
         arrayOf(
             call_toggle_microphone, call_toggle_speaker, call_dialpad,
-            call_toggle_hold, call_add, call_swap, call_merge, call_manage
+            call_toggle_hold, call_add, call_swap, call_merge, call_record_sound
         ).forEach { imageView ->
             imageView.setOnLongClickListener {
                 if (!imageView.contentDescription.isNullOrEmpty()) {
@@ -620,7 +640,6 @@ class CallActivity : SimpleActivity() {
             call_status_label.text = getString(statusTextId)
         }
 
-        call_manage.beVisibleIf(call.hasCapability(Call.Details.CAPABILITY_MANAGE_CONFERENCE))
         setActionButtonEnabled(call_swap, state == Call.STATE_ACTIVE)
         setActionButtonEnabled(call_merge, state == Call.STATE_ACTIVE)
     }
@@ -817,6 +836,19 @@ class CallActivity : SimpleActivity() {
         } else {
             view.background.applyColorFilter(getInactiveButtonColor())
             view.applyColorFilter(getProperBackgroundColor().getContrastColor())
+        }
+    }
+
+    private fun playRecordingSound() {
+        val mediaPlayer = MediaPlayer()
+        val afd: AssetFileDescriptor
+        try {
+            afd = assets.openFd("mp3/recording_voice.mp3")
+            mediaPlayer.setDataSource(afd.fileDescriptor)
+            mediaPlayer.prepare()
+            mediaPlayer.start()
+        } catch (e: IOException) {
+            e.printStackTrace()
         }
     }
 }
